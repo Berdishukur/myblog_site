@@ -1,47 +1,42 @@
 from django.db import models
-from django.contrib.auth.models import User
+from  django.contrib.auth.models import User
 from django.utils import timezone
 from django.urls import reverse
 
-
-class PublishedManager(models.Manager):
+class PublishedManager(models.Model):
     def get_queryset(self):
-        return super(PublishedManager, self).get_queryset().filter(status='published')
-
+        return (PublishedManager,self).get_queryset().filter(status="published")
 
 class Post(models.Model):
-    STATUS_CHOICES = (
-        ('draft', 'Draft'),
-        ('published', 'Published')
+    STATUS_CHOICES=(
+        ("draft","Draft"),
+        ("published","Published")
     )
-
-    title = models.CharField(max_length=255)
-    slug = models.SlugField(max_length=255, unique_for_date="publish")
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="blog_posts")
-    body = models.TextField()
-    publish = models.DateTimeField(default=timezone.now)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-    status = models.CharField(max_length=10,choices=STATUS_CHOICES, default='draft')
-
+    title=models.CharField(max_length=255)
+    slug=models.SlugField(max_length=255,unique_for_date="publish")
+    author=models.ForeignKey(User,on_delete=models.CASCADE,related_name="blog_posts")
+    body=models.TextField()
+    publish=models.DateTimeField(default=timezone.now)
+    created=models.DateTimeField(auto_now_add=True)
+    update=models.DateTimeField(auto_now=True)
+    status=models.CharField(max_length=10,choices=STATUS_CHOICES,default="draft")
     class Meta:
-        ordering = ('-publish',)
-
+        ordering=("-publish",)
     def __str__(self):
         return self.title
 
-    objects = models.Manager()
-    published = PublishedManager()
-
-    def get_absolute_url(self):
-        return reverse("blog:post_detail", args=[self.publish.year,
-                                                 self.publish.month,
-                                                 self.publish.day,
-                                                 self.slug])
+    # def get_absolute_url(self):
+    #     return reverse()
 
 
-posts = Post.objects.filter(status='published')
-p_posts = Post.published.all()
+    objects=models.Manager
+    published=PublishedManager
+
+
+
+post=Post.objects.filter(status="published")
+# s_post=Post.published.all()
+
 
 
 
