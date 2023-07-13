@@ -2,17 +2,19 @@
 {% block title %}IT-NEWS{% endblock %}
 
 {% block content %}
-    <h1>IT-NEWS</h1>
-    {% for post in posts %}
-        <div class="post">
-            <h2>
-                <a href="{{ post.get_absolute_url }}"> {{ post.title }}</a>
-            </h2>
-            <p class="date">
-                Published {{ post.publish }} by {{ post.author }}
-            </p>
+<a href=""><h1>IT-NEWS</h1></a>
+<h1>IT-NEWS</h1>
+{% for post in posts %}
+<div class="post">
+    <h2>
+        <a href="{{ post.get_absolute_url }}"> {{ post.title }}</a>
+    </h2>
+    <p class="date">
+        Published {{ post.publish }} by {{ post.author }}
+    </p>
 
-        </div>
-    {% endfor %}
-    {% include 'paginator.html' with page=page_obj %}
+</div>
+{% endfor %}
+{% include 'paginator.html' with page=page_obj %}
 {% endblock %}
+
