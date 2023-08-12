@@ -20,3 +20,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('blogapp.urls', namespace='blogapp'))
 ]
+
+
+
